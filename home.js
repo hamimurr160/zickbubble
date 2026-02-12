@@ -21,6 +21,8 @@ onAuthStateChanged(auth, (user) => {
         startBalanceListener(user);
         // Start Ads once user is authenticated
         initializeAds();
+        // Initialize Notification Button Listener
+        setupNotifications();
     } else {
         // Only redirect to login if we aren't already there to prevent loops
         if (!window.location.pathname.includes("login.html") && !window.location.pathname.includes("signup.html")) {
@@ -41,6 +43,33 @@ function startBalanceListener(user) {
             setDoc(userRef, { email: user.email, balance: 0, history: [] });
         }
     });
+}
+
+/**
+ * PUSH NOTIFICATION FEATURE
+ * Added as requested for project completion.
+ */
+function setupNotifications() {
+    const notifyBtn = document.getElementById('pushNotifyBtn');
+    if (notifyBtn) {
+        notifyBtn.addEventListener('click', () => {
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            } else {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        new Notification("Zick Bubble", {
+                            body: "Notifications enabled! You will receive reward updates here.",
+                            icon: "1.png"
+                        });
+                        alert("Notifications Enabled Successfully!");
+                    } else {
+                        alert("Notifications were denied. Please enable them in settings to receive rewards.");
+                    }
+                });
+            }
+        });
+    }
 }
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -132,4 +161,3 @@ function handleSplashTimer(overlay) {
         }
     }, 1000);
 }
-    
