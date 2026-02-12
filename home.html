@@ -7,13 +7,35 @@
     <link rel="stylesheet" href="home.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3940256099942544" crossorigin="anonymous"></script>
     <link rel="manifest" href="manifest.json">
+    <style>
+        /* CSS to position the notification icon correctly without changing main design */
+        .balance-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #pushNotifyBtn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            line-height: 1;
+        }
+    </style>
 </head>
 <body>
 
 <div id="splash-ad-container" class="splash-overlay">
     <div class="splash-content">
         <div id="splash-ad-slot"></div> 
-        <div class="splash-timer">The game will start in <span id="timer-seconds">5</span>s...</div>
+        <div class="splash-timer">The game will start in <span id="timer-seconds">2</span>s...</div>
     </div>
 </div>
 
@@ -24,15 +46,12 @@
             <div class="balance-section">
                 <small>TOTAL COINS</small>
                 <div class="coin-text">💰 <span id="homeBalance">0</span></div>
+                <button id="pushNotifyBtn" title="Enable Rewards">🔔</button>
             </div>
 
             <nav class="menu-list">
                 <button onclick="location.href='game.html'" class="menu-btn play-btn">
                     <span class="btn-icon">🎮</span> PLAY GAME
-                </button>
-
-                <button id="pushNotifyBtn" class="menu-btn notify-btn" style="background: #10b981; color: white;">
-                    <span class="btn-icon">🔔</span> ENABLE REWARDS
                 </button>
 
                 <button onclick="location.href='withdrawal.html'" class="menu-btn secondary-btn">
