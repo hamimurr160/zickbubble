@@ -17,11 +17,15 @@ const db = getFirestore(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        console.log("User detected:", user.email);
         startBalanceListener(user);
         // Start Ads once user is authenticated
         initializeAds();
     } else {
-        window.location.href = "login.html";
+        // Only redirect to login if we aren't already there to prevent loops
+        if (!window.location.pathname.includes("login.html") && !window.location.pathname.includes("signup.html")) {
+            window.location.href = "login.html";
+        }
     }
 });
 
@@ -128,3 +132,4 @@ function handleSplashTimer(overlay) {
         }
     }, 1000);
 }
+    
