@@ -21,7 +21,7 @@ onAuthStateChanged(auth, (user) => {
         startBalanceListener(user);
         // Start Ads once user is authenticated
         initializeAds();
-        // Initialize Notification Button Listener
+        // Initialize Notification Icon Listener (Fixed logic to prevent game disappearance)
         setupNotifications();
     } else {
         // Only redirect to login if we aren't already there to prevent loops
@@ -37,7 +37,10 @@ function startBalanceListener(user) {
         if (snapshot.exists()) {
             const data = snapshot.data();
             const cloudBalance = data.balance || 0;
-            document.getElementById('homeBalance').innerText = cloudBalance.toLocaleString();
+            const balanceDisplay = document.getElementById('homeBalance');
+            if(balanceDisplay) {
+                balanceDisplay.innerText = cloudBalance.toLocaleString();
+            }
             localStorage.setItem('zikeBalance', cloudBalance);
         } else {
             setDoc(userRef, { email: user.email, balance: 0, history: [] });
@@ -47,14 +50,14 @@ function startBalanceListener(user) {
 
 /**
  * PUSH NOTIFICATION FEATURE
- * Added as requested for project completion.
+ * Updated to target the icon in the header.
  */
 function setupNotifications() {
     const notifyBtn = document.getElementById('pushNotifyBtn');
     if (notifyBtn) {
-        notifyBtn.addEventListener('click', () => {
+        notifyBtn.onclick = () => {
             if (!("Notification" in window)) {
-                alert("This browser does not support desktop notification");
+                alert("This browser does not support notifications");
             } else {
                 Notification.requestPermission().then((permission) => {
                     if (permission === "granted") {
@@ -64,11 +67,11 @@ function setupNotifications() {
                         });
                         alert("Notifications Enabled Successfully!");
                     } else {
-                        alert("Notifications were denied. Please enable them in settings to receive rewards.");
+                        alert("Notifications were denied. Please enable them to receive rewards.");
                     }
                 });
             }
-        });
+        };
     }
 }
 
