@@ -6,6 +6,7 @@
     <title>Zick Bubble - Menu</title>
     <link rel="stylesheet" href="home.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3940256099942544" crossorigin="anonymous"></script>
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -30,6 +31,10 @@
                     <span class="btn-icon">🎮</span> PLAY GAME
                 </button>
 
+                <button id="pushNotifyBtn" class="menu-btn notify-btn" style="background: #10b981; color: white;">
+                    <span class="btn-icon">🔔</span> ENABLE REWARDS
+                </button>
+
                 <button onclick="location.href='withdrawal.html'" class="menu-btn secondary-btn">
                     <span class="btn-icon">💸</span> WITHDRAWAL
                 </button>
@@ -48,5 +53,13 @@
     <div id="bottom-ad-slot" class="fixed-ad-container bottom"></div>
 
     <script type="module" src="home.js"></script>
+    <script type="module">
+        // Register Service Worker for the APK/PWA functionality
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log("Service Worker Registered");
+            });
+        }
+    </script>
 </body>
 </html>
