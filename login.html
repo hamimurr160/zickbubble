@@ -21,7 +21,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC2n_sZjqOOr73o201vvJ0PaNDUFmwoesM",
@@ -41,11 +41,19 @@
             const password = document.getElementById('login-password').value;
             const errorMsg = document.getElementById('login-error');
 
-            signInWithEmailAndPassword(auth, email, password)
+            // Force session persistence before signing in
+            setPersistence(auth, browserLocalPersistence)
+                .then(() => {
+                    return signInWithEmailAndPassword(auth, email, password);
+                })
                 .then((userCredential) => {
-                    window.location.href = 'home.html';
+                    // Small delay ensures Firebase registers the token before redirect
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 500);
                 })
                 .catch((error) => {
+                    console.error(error.code);
                     errorMsg.innerText = "Invalid Email or Password";
                 });
         };
