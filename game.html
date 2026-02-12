@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<div id="daily-bonus-bubble" onclick="triggerDailyBonus()"></div>
+
+
+    <div id="game-header">
+        <button class="ui-btn" onclick="exitToHome()">🏠</button>
+        <div class="stat-box">SCORE: <span id="scoreVal">0</span></div>
+        <div class="stat-box" style="color: #FFD700;">BEST: <span id="highScoreVal">0</span></div>
+        <button id="pauseBtn" class="ui-btn">⏸</button>
+    </div>
+
+    <div id="pauseMenu" class="overlay">
+        <div class="menu-card">
+            <h2>PAUSED</h2>
+            <button id="resumeBtn" class="menu-btn resume">RESUME</button>
+            <button onclick="restartGame()" class="menu-btn restart">RESTART</button>
+            <button onclick="exitToHome()" class="menu-btn home">HOME</button>
+        </div>
+    </div>
+
+    <div id="gameOverMenu" class="overlay">
+        <div class="menu-card">
+            <h2 style="color: #ef4444;">GAME OVER</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button onclick="restartGame()" class="menu-btn restart">PLAY AGAIN</button>
+            <button onclick="exitToHome()" class="menu-btn home">HOME</button>
+        </div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+    <script type="module" src="game.js"></script>
+</body>
+</html>

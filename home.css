@@ -1,0 +1,174 @@
+body, html {
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(circle, #1e3a8a 0%, #1e1b4b 100%); 
+    height: 100%; 
+    width: 100%;
+    /* Changed to column to support fixed header/footer ads */
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden;
+}
+
+/* --- AD ENGINE SLOTS --- */
+.fixed-ad-container {
+    width: 100%;
+    min-height: 55px;
+    position: fixed;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.fixed-ad-container.top { 
+    top: 0; 
+}
+
+.fixed-ad-container.bottom { 
+    bottom: 0; 
+}
+
+/* --- CONTENT WRAPPER --- */
+/* This ensures your menu doesn't touch the ads */
+.content-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.menu-container {
+    width: 85%;
+    max-width: 360px;
+    text-align: center;
+}
+
+.balance-section {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.balance-section small {
+    font-size: 11px; 
+    font-weight: 800; 
+    color: #93c5fd; 
+    letter-spacing: 2px;
+}
+
+.coin-text {
+    font-size: 36px; 
+    font-weight: 900; 
+    color: #ffffff; 
+    margin-top: 5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.menu-btn {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu-btn:active { 
+    transform: scale(0.94); 
+}
+
+.play-btn {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 6px 0 #1d4ed8;
+}
+
+.secondary-btn {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.logout-btn {
+    background: transparent;
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    margin-top: 10px;
+    box-shadow: none;
+}
+
+.logout-btn:active {
+    background: rgba(248, 113, 113, 0.1);
+}
+
+.btn-icon { 
+    font-size: 24px; 
+}
+
+/* --- SPLASH AD OVERLAY --- */
+.splash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    z-index: 10000; /* Higher than fixed-ad-container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.splash-content {
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+#splash-ad-slot {
+    width: 100%;
+    min-height: 250px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.splash-timer {
+    color: #93c5fd;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}

@@ -1,0 +1,183 @@
+body, html {
+    margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+    background: #e0f7ff; min-height: 100%; color: #1e293b;
+    /* Prevent horizontal shift with ads */
+    overflow-x: hidden;
+}
+
+/* --- AD ENGINE SLOTS --- */
+.fixed-ad-container {
+    width: 100%;
+    min-height: 55px; /* Standard Banner Height */
+    position: fixed;
+    left: 0;
+    z-index: 10001; /* High enough for ads */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e0f7ff; /* Match background so it looks seamless */
+}
+
+.fixed-ad-container.top { 
+    top: 0; 
+}
+
+.fixed-ad-container.bottom { 
+    bottom: 0; 
+}
+
+/* --- CONTENT WRAPPER --- */
+/* Increased padding to account for Top Ad (55px) + Header (65px) */
+.content-wrapper {
+    width: 100%;
+    padding-top: 130px; 
+    padding-bottom: 75px;
+    box-sizing: border-box;
+    display: block;
+}
+
+/* --- PREMIUM HEADER --- */
+.history-header {
+    background: #00BFFF; padding: 15px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: white; 
+    position: fixed; 
+    top: 55px; /* MOVED BELOW TOP AD SLOT */
+    left: 0; right: 0;
+    z-index: 10000; /* Just below Ads but above content */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    border-radius: 0 0 25px 25px;
+    height: 65px;
+    box-sizing: border-box;
+}
+
+.nav-group { 
+    display: flex; 
+    gap: 10px; 
+    position: relative; 
+    z-index: 10002; /* Ensures buttons are on the very top layer */
+}
+
+.nav-icon-btn {
+    background: rgba(255,255,255,0.25); border: none; color: white;
+    font-size: 18px; width: 42px; height: 42px; border-radius: 12px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease; backdrop-filter: blur(5px);
+    -webkit-tap-highlight-color: transparent; /* Fix for mobile tap */
+}
+
+.nav-icon-btn:active {
+    transform: scale(0.9);
+    background: rgba(255,255,255,0.4);
+}
+
+.page-title { 
+    font-size: 16px; 
+    font-weight: 900; 
+    letter-spacing: 2px; 
+    margin: 0; 
+    text-transform: uppercase;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.spacer { width: 94px; } 
+
+/* --- HISTORY LIST --- */
+.history-main { padding: 20px; }
+
+.history-card {
+    background: white; border-radius: 20px; padding: 18px;
+    margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    border-left: 6px solid #00BFFF;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(15px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+
+.method-label { font-weight: 800; font-size: 15px; color: #00BFFF; }
+
+.status-tag { 
+    font-size: 10px; font-weight: 900; padding: 5px 12px; 
+    border-radius: 50px; text-transform: uppercase;
+}
+
+/* Status Colors */
+.status-pending { background: #fff7ed; color: #c2410c; }
+.status-approved { background: #f0fdf4; color: #15803d; }
+.status-rejected { background: #fef2f2; color: #b91c1c; }
+
+.card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.data-field { display: flex; flex-direction: column; }
+.field-label { font-size: 9px; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
+.field-value { font-size: 13px; font-weight: 700; color: #334155; }
+
+/* LOADING & EMPTY STATES */
+.loading-state { 
+    text-align: center; 
+    padding: 50px 20px; 
+    color: #64748b; 
+}
+
+.spinner { 
+    width: 30px; 
+    height: 30px; 
+    border: 4px solid #f1f5f9; 
+    border-top: 4px solid #00BFFF; 
+    border-radius: 50%; 
+    animation: spin 1s linear infinite; 
+    margin: 0 auto 15px;
+}
+
+@keyframes spin { 
+    100% { transform: rotate(360deg); } 
+}
+
+.empty-state { text-align: center; margin-top: 80px; color: #64748b; font-weight: bold; }
+
+/* --- SPLASH AD OVERLAY --- */
+.splash-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: #000000 !important;
+    z-index: 99999 !important;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.splash-content {
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+#splash-ad-slot {
+    width: 100%;
+    min-height: 250px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.splash-timer {
+    color: #00BFFF;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}

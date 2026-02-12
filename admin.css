@@ -1,0 +1,236 @@
+/* --- 1. CORE THEME & VARIABLES --- */
+:root {
+    --bg: #05070a; 
+    --card: #11141d; 
+    --primary: #3b82f6;
+    --border: rgba(255,255,255,0.06); 
+    --text: #f8fafc;
+    --pending: #fbbf24; 
+    --approved: #10b981; 
+    --rejected: #ef4444;
+}
+
+* { box-sizing: border-box; }
+
+body { 
+    margin: 0; 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    overflow-x: hidden; 
+}
+
+/* --- 2. SIDEBAR (ELITE DRAWER) --- */
+.sidebar { 
+    position: fixed; 
+    left: -100%; 
+    top: 0; 
+    width: 280px; 
+    height: 100vh; 
+    background: #0d1117; 
+    z-index: 2000; 
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+    border-right: 1px solid var(--border); 
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.open { 
+    left: 0; 
+    box-shadow: 20px 0 50px rgba(0,0,0,0.8); 
+}
+
+.sidebar-inner { 
+    height: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    padding: 25px; 
+}
+
+.sidebar-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 30px; 
+}
+
+.brand { 
+    font-weight: 800; 
+    color: var(--primary); 
+    font-size: 22px; 
+    letter-spacing: -0.5px;
+}
+
+.brand span { color: #fff; font-weight: 400; font-size: 14px; margin-left: 4px; }
+
+.close-icon-right { 
+    width: 32px; height: 32px; 
+    background: rgba(255, 255, 255, 0.05); 
+    border-radius: 8px; 
+    display: flex; align-items: center; justify-content: center; 
+    cursor: pointer; color: #64748b;
+    transition: 0.3s;
+}
+
+.close-icon-right:hover { background: var(--rejected); color: #fff; }
+
+.sidebar-nav { flex: 1; }
+
+.nav-item { 
+    background: none; border: none; color: #64748b; 
+    padding: 14px 18px; display: flex; align-items: center; 
+    gap: 15px; border-radius: 12px; font-size: 15px; 
+    font-weight: 600; cursor: pointer; margin-bottom: 8px; 
+    transition: 0.3s; width: 100%; text-align: left;
+}
+
+.nav-item.active { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
+.nav-item:hover:not(.active) { background: rgba(255,255,255,0.03); color: #fff; }
+
+.sidebar-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); }
+.admin-card { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.admin-card img { width: 45px; height: 45px; border-radius: 12px; border: 2px solid var(--primary); object-fit: cover; }
+
+.logout-btn { 
+    width: 100%; padding: 12px; background: rgba(239, 68, 68, 0.1); 
+    border: 1px solid rgba(239, 68, 68, 0.2); color: var(--rejected); 
+    border-radius: 12px; font-weight: 700; cursor: pointer; 
+    display: flex; align-items: center; justify-content: center; gap: 10px; 
+}
+
+/* --- 3. ENHANCED TOOLBAR (SEARCH & FILTERS) --- */
+.toolbar-enhanced {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.search-inner { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 16px; 
+    padding: 14px 20px; 
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+    transition: 0.3s ease;
+}
+
+.search-inner:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.search-inner i { color: #64748b; }
+.search-inner input { 
+    background: none; border: none; color: #fff; 
+    width: 100%; outline: none; font-size: 15px;
+}
+
+.filter-pills { 
+    display: flex; 
+    gap: 12px; 
+    overflow-x: auto; 
+    padding-bottom: 5px;
+}
+
+.pill-btn { 
+    padding: 12px 24px; 
+    border-radius: 14px; 
+    border: 1px solid var(--border); 
+    background: var(--card); 
+    color: #64748b; 
+    font-weight: 700; 
+    font-size: 13px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+/* Active Pill States */
+.pill-btn.active.p-pending { background: rgba(251, 191, 36, 0.1); color: var(--pending); border-color: var(--pending); }
+.pill-btn.active.p-approved { background: rgba(16, 185, 129, 0.1); color: var(--approved); border-color: var(--approved); }
+.pill-btn.active.p-rejected { background: rgba(239, 68, 68, 0.1); color: var(--rejected); border-color: var(--rejected); }
+
+/* --- 4. DATA TABLES --- */
+.table-frame { 
+    margin: 0 25px 25px 25px; 
+    border-radius: 20px; 
+    border: 1px solid var(--border); 
+    background: var(--card); 
+    overflow: hidden; 
+}
+
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.master-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 1150px; }
+
+.master-table th { 
+    padding: 20px; background: rgba(255,255,255,0.02); 
+    text-align: left; font-size: 11px; color: #64748b; 
+    text-transform: uppercase; letter-spacing: 1px; 
+    border-bottom: 1px solid var(--border); 
+}
+
+.master-table td { 
+    padding: 18px 20px; border-bottom: 1px solid var(--border); 
+    font-size: 14px; white-space: nowrap; vertical-align: middle; 
+}
+
+/* --- 5. INTERFACE ELEMENTS --- */
+.main-header { 
+    padding: 15px 25px; display: flex; justify-content: space-between; 
+    align-items: center; border-bottom: 1px solid var(--border); 
+    background: rgba(5,7,10,0.8); backdrop-filter: blur(15px); 
+    position: sticky; top: 0; z-index: 100; 
+}
+
+.menu-trigger { 
+    width: 28px; height: 18px; display: flex; 
+    flex-direction: column; justify-content: space-between; cursor: pointer; 
+}
+.menu-trigger span { width: 100%; height: 3px; background: var(--primary); border-radius: 10px; }
+.menu-trigger span:nth-child(2) { width: 65%; }
+
+.live-status { 
+    background: rgba(16, 185, 129, 0.1); color: var(--approved); 
+    padding: 6px 14px; border-radius: 20px; font-size: 11px; 
+    font-weight: 800; display: flex; align-items: center; gap: 6px; 
+}
+
+.dot { 
+    width: 6px; height: 6px; background: var(--approved); 
+    border-radius: 50%; box-shadow: 0 0 10px var(--approved); 
+}
+
+/* --- 6. MODALS & ADS (PRO) --- */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(10px); display: flex; 
+    align-items: center; justify-content: center; z-index: 3000;
+}
+
+.modal-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 30px; width: 100%; max-width: 450px;
+}
+
+.ad-card { 
+    background: var(--card); border: 1px solid var(--border); 
+    padding: 30px; border-radius: 24px; max-width: 600px; margin: 20px auto;
+}
+
+.pro-input { 
+    width: 100%; background: #05070a; border: 1px solid var(--border); 
+    padding: 14px; border-radius: 12px; color: #fff; margin-top: 10px; outline: none;
+}
+
+.save-btn { 
+    width: 100%; padding: 15px; background: var(--primary); 
+    border: none; color: #fff; border-radius: 12px; 
+    font-weight: 800; cursor: pointer; margin-top: 20px; transition: 0.3s;
+}
+.save-btn:hover { opacity: 0.9; transform: translateY(-2px); }

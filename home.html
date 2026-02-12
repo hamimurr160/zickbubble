@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zick Bubble - Menu</title>
+    <link rel="stylesheet" href="home.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-3940256099942544" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="splash-ad-container" class="splash-overlay">
+    <div class="splash-content">
+        <div id="splash-ad-slot"></div> 
+        <div class="splash-timer">The game will start in <span id="timer-seconds">5</span>s...</div>
+    </div>
+</div>
+
+    <div id="top-ad-slot" class="fixed-ad-container top"></div>
+
+    <div class="content-wrapper">
+        <div class="menu-container">
+            <div class="balance-section">
+                <small>TOTAL COINS</small>
+                <div class="coin-text">💰 <span id="homeBalance">0</span></div>
+            </div>
+
+            <nav class="menu-list">
+                <button onclick="location.href='game.html'" class="menu-btn play-btn">
+                    <span class="btn-icon">🎮</span> PLAY GAME
+                </button>
+
+                <button onclick="location.href='withdrawal.html'" class="menu-btn secondary-btn">
+                    <span class="btn-icon">💸</span> WITHDRAWAL
+                </button>
+
+                <button onclick="location.href='history.html'" class="menu-btn secondary-btn">
+                    <span class="btn-icon">📜</span> HISTORY
+                </button>
+
+                <button id="logoutBtn" class="menu-btn logout-btn">
+                    <span class="btn-icon">🚪</span> LOGOUT
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <div id="bottom-ad-slot" class="fixed-ad-container bottom"></div>
+
+    <script type="module" src="home.js"></script>
+</body>
+</html>

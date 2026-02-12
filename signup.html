@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zick Bubble - Signup</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1 class="logo">ZICK BUBBLE</h1>
+        <div class="auth-card">
+            <h2>Create Account</h2>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password (Min 6 chars)">
+            <p id="error-msg" class="error"></p>
+            <button id="signup-btn">SIGN UP</button>
+            <p class="switch-auth">Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2n_sZjqOOr73o201vvJ0PaNDUFmwoesM",
+            authDomain: "zick-11c5c.firebaseapp.com",
+            projectId: "zick-11c5c",
+            storageBucket: "zick-11c5c.firebasestorage.app",
+            messagingSenderId: "777090785216",
+            appId: "1:777090785216:web:a32686beda44caae0bb225",
+            measurementId: "G-D2N3MBHM9S"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('signup-btn').onclick = () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if(password.length < 6) {
+                errorMsg.innerText = "Password must be at least 6 characters.";
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Successful signup
+                    alert("Account Created!");
+                    window.location.href = 'home.html';
+                })
+                .catch((error) => {
+                    errorMsg.innerText = error.message;
+                });
+        };
+    </script>
+</body>
+</html>

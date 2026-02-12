@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zick Bubble - Login</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1 class="logo">ZICK BUBBLE</h1>
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <input type="email" id="login-email" placeholder="Email Address">
+            <input type="password" id="login-password" placeholder="Password">
+            <p id="login-error" class="error"></p>
+            <button id="login-btn">LOGIN</button>
+            <p class="switch-auth">New user? <a href="signup.html">Create Account</a></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2n_sZjqOOr73o201vvJ0PaNDUFmwoesM",
+            authDomain: "zick-11c5c.firebaseapp.com",
+            projectId: "zick-11c5c",
+            storageBucket: "zick-11c5c.firebasestorage.app",
+            messagingSenderId: "777090785216",
+            appId: "1:777090785216:web:a32686beda44caae0bb225",
+            measurementId: "G-D2N3MBHM9S"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('login-btn').onclick = () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorMsg = document.getElementById('login-error');
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    window.location.href = 'home.html';
+                })
+                .catch((error) => {
+                    errorMsg.innerText = "Invalid Email or Password";
+                });
+        };
+    </script>
+</body>
+</html>

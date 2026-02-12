@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zick Admin | Elite Suite</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loginOverlay" class="auth-overlay">
+        <div class="auth-card">
+            <div class="logo-box">🎯</div>
+            <h1>Zick Admin</h1>
+            <p>Authorized Terminal Access</p>
+            <button id="loginBtn"><i class="fab fa-google"></i> Login with Google</button>
+        </div>
+    </div>
+
+    <div id="adminContent" class="app-layout" style="display:none;">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-inner">
+                <div class="sidebar-header">
+                    <div class="brand">ZICK<span>PRO</span></div>
+                    <div id="closeSidebar" class="close-icon-right"><i class="fas fa-times"></i></div>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" onclick="location.href='admin.html'"><i class="fas fa-wallet"></i> <span>Withdrawals</span></button>
+                    <button class="nav-item" onclick="location.href='user.html'"><i class="fas fa-users"></i> <span>Users List</span></button>
+                    <button class="nav-item" onclick="location.href='ads.html'"><i class="fas fa-rectangle-ad"></i> <span>Ads Manager</span></button>
+                    <button class="nav-item" onclick="location.href='home.html'"><i class="fas fa-gamepad"></i> <span>Game View</span></button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="admin-card">
+                        <img id="adminPhoto" src="" alt="Admin">
+                        <div class="admin-details">
+                            <span id="adminName">Admin</span>
+                            <small id="adminEmail"></small>
+                        </div>
+                    </div>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-power-off"></i> <span>Terminate Session</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-body">
+            <header class="main-header">
+                <div class="header-left">
+                    <div id="openSidebar" class="menu-trigger">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <h1>Payment Sheet</h1>
+                </div>
+                <div class="header-right">
+                    <div class="live-status"><div class="dot"></div> <span id="pendingCount">0</span> RECORDS</div>
+                </div>
+            </header>
+
+            <div class="scroll-area">
+                <div class="toolbar-enhanced">
+                    <div class="search-pro-container">
+                        <div class="search-inner">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search email or wallet...">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-pills">
+                        <button class="pill-btn p-pending active" onclick="switchTab('Pending', this)">
+                            <i class="fas fa-clock"></i> Pending
+                        </button>
+                        <button class="pill-btn p-approved" onclick="switchTab('Approved', this)">
+                            <i class="fas fa-check-circle"></i> Approved
+                        </button>
+                        <button class="pill-btn p-rejected" onclick="switchTab('Rejected', this)">
+                            <i class="fas fa-times-circle"></i> Rejected
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-frame">
+                    <div class="table-scroll">
+                        <table class="master-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Email</th>
+                                    <th>Account / Wallet Address</th>
+                                    <th>Method</th>
+                                    <th>Amount</th>
+                                    <th>Request Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

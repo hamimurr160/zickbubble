@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zick Withdrawal</title>
+    <link rel="stylesheet" href="withdrawal.css">
+</head>
+<body>
+
+    <div id="splash-ad-container" class="splash-overlay" style="display:none;">
+        <div class="splash-content">
+            <div id="splash-ad-slot"></div>
+            <div class="splash-timer">Loading in <span id="timer-seconds">5</span>s...</div>
+        </div>
+    </div>
+
+    <div id="top-ad-slot" class="fixed-ad-container top"></div>
+
+    <div class="content-wrapper">
+        
+        <header class="app-header">
+            <div class="nav-group">
+                <button onclick="history.back()" class="icon-btn">⬅</button>
+                <button onclick="location.href='home.html'" class="icon-btn">🏠</button>
+            </div>
+            <div class="balance-display">
+                <small>WALLET BALANCE</small>
+                <div class="coin-count">💰 <span id="userBalance">0</span></div>
+            </div>
+            <button onclick="location.href='history.html'" class="icon-btn">📜</button>
+        </header>
+
+        <main class="withdraw-main">
+            <div class="rate-badge">5,000 Coins = 1 TK</div>
+            
+            <div class="payment-grid">
+                <button class="payment-card" onclick="openForm('RECHARGE', 100000)">
+                    <div class="method-icon-box recharge-theme">📱</div>
+                    <span class="method-name">RECHARGE</span>
+                    <span class="method-min">Min: 1,00,000</span>
+                </button>
+                <button class="payment-card" onclick="openForm('BKASH', 250000)">
+                    <div class="method-icon-box bkash-theme">🕊️</div>
+                    <span class="method-name">BKASH</span>
+                    <span class="method-min">Min: 2,50,000</span>
+                </button>
+                <button class="payment-card" onclick="openForm('NAGAD', 250000)">
+                    <div class="method-icon-box nagad-theme">🏃‍♂️</div>
+                    <span class="method-name">NAGAD</span>
+                    <span class="method-min">Min: 2,50,000</span>
+                </button>
+                <button class="payment-card" onclick="openForm('USDT', 350000)">
+                    <div class="method-icon-box usdt-theme">💲</div>
+                    <span class="method-name">USDT</span>
+                    <span class="method-min">Min: 3,50,000</span>
+                </button>
+            </div>
+
+            <div id="withdrawModal" class="modal-overlay">
+                <div class="modal-content">
+                    <h2 id="modalTitle">METHOD</h2>
+                    <div class="form-group">
+                        <label id="inputLabel">Account Details</label>
+                        <input type="text" id="targetAccount" placeholder="Enter here...">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (Coins)</label>
+                        <input type="number" id="coinAmount" placeholder="Enter coins">
+                    </div>
+                    <p id="errorDisplay" class="error-text"></p>
+                    <div class="modal-actions">
+                        <button class="btn-secondary" type="button" onclick="closeForm()">CANCEL</button>
+                        <button class="btn-primary" id="withdrawBtn" onclick="processWithdrawal()">
+                            <span id="btnText">PROCEED</span>
+                            <div id="loader" class="spinner" style="display: none;"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div> <div id="bottom-ad-slot" class="fixed-ad-container bottom"></div>
+
+    <script type="module" src="withdrawal.js"></script>
+</body>
+</html>

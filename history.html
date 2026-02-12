@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Withdrawal History</title>
+    <link rel="stylesheet" href="history.css">
+</head>
+<body>
+
+    <div id="splash-ad-container" class="splash-overlay" style="display:none;">
+        <div class="splash-content">
+            <div id="splash-ad-slot"></div>
+            <div class="splash-timer">Loading in <span id="timer-seconds">5</span>s...</div>
+        </div>
+    </div>
+
+    <div id="top-ad-slot" class="fixed-ad-container top"></div>
+
+    <div class="content-wrapper">
+        <header class="history-header">
+            <div class="nav-group">
+                <button onclick="history.back()" class="nav-icon-btn">⬅</button>
+                <button onclick="location.href='home.html'" class="nav-icon-btn">🏠</button>
+            </div>
+            <h1 class="page-title">HISTORY</h1>
+            <div class="spacer"></div>
+        </header>
+
+        <main class="history-main">
+            <div id="historyContainer" class="history-list">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Fetching Transactions...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="bottom-ad-slot" class="fixed-ad-container bottom"></div>
+
+    <script type="module" src="history.js"></script>
+</body>
+</html>

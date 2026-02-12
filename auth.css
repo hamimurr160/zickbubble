@@ -1,0 +1,37 @@
+body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle, #1e3a8a 0%, #1e1b4b 100%);
+    display: flex; justify-content: center; align-items: center;
+}
+
+.auth-container { width: 90%; max-width: 380px; text-align: center; }
+
+.logo { color: #3b82f6; font-size: 36px; font-weight: 900; margin-bottom: 20px; }
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px; border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h2 { color: white; margin-bottom: 20px; }
+
+input {
+    width: 100%; padding: 15px; margin-bottom: 15px;
+    border-radius: 12px; border: none; outline: none;
+    background: rgba(255, 255, 255, 0.9); font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%; padding: 15px; border: none; border-radius: 12px;
+    background: #3b82f6; color: white; font-weight: 900;
+    cursor: pointer; font-size: 16px; margin-top: 10px;
+}
+
+.error { color: #f87171; font-size: 13px; font-weight: bold; margin-bottom: 10px; }
+
+.switch-auth { color: #93c5fd; margin-top: 20px; font-size: 14px; }
+.switch-auth a { color: white; font-weight: bold; text-decoration: none; }

@@ -1,0 +1,120 @@
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+}
+
+/* --- AD ENGINE SLOTS (TOP & BOTTOM) --- */
+.fixed-ad-container {
+    width: 100%;
+    height: 55px; /* Standard Banner Height */
+    position: fixed;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.fixed-ad-container.top { top: 0; }
+.fixed-ad-container.bottom { bottom: 0; }
+
+/* --- UPDATED HEADER (MOVED BELOW TOP AD) --- */
+#game-header {
+    position: fixed; 
+    top: 55px; /* Sits exactly below the top ad */
+    width: 100%; height: 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 15px; box-sizing: border-box; background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px); z-index: 10;
+}
+
+/* --- GAME AREA ADJUSTMENT --- */
+#game-canvas, .game-container {
+    margin-top: 115px; /* Top Ad (55px) + Header (60px) */
+    height: calc(100vh - 170px) !important; /* Total height minus Top Ad, Header, and Bottom Ad */
+    width: 100%;
+    display: block;
+}
+
+.stat-box { font: bold 20px Arial; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); }
+
+.ui-btn {
+    padding: 8px 15px; border-radius: 12px; border: none;
+    background: #FF8C00; color: white; font-weight: bold; cursor: pointer;
+}
+
+.overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    justify-content: center; align-items: center; z-index: 100;
+}
+
+.menu-card { background: white; padding: 30px; border-radius: 20px; text-align: center; width: 250px; }
+
+.menu-btn {
+    width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 10px;
+    color: white; font-weight: bold; font-size: 16px; cursor: pointer;
+}
+.resume { background: #22c55e; }
+.restart { background: #ef4444; }
+.home { background: #3b82f6; }
+
+/* --- SPLASH/REWARD OVERLAY --- */
+.splash-overlay {
+    position: fixed !important; top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important; background: #000000 !important;
+    z-index: 99999 !important; display: none; justify-content: center; align-items: center;
+}
+
+/* --- DAILY BONUS BUBBLE & FLOATING EFFECT --- */
+#daily-bonus-bubble {
+    position: fixed;
+    top: 65px; /* Positioned inside the game header area */
+    right: -100px;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, #ffdf00, #d4af37);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 223, 0, 0.7), inset -5px -5px 10px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 20;
+    /* 15 seconds to travel across, infinite loop */
+    animation: floatAcross 15s linear infinite;
+    border: 2px solid white;
+}
+
+#daily-bonus-bubble::after {
+    content: '🎁'; /* Gift icon inside the bubble */
+}
+
+/* The horizontal and vertical floating path */
+@keyframes floatAcross {
+    0% { 
+        right: -100px; 
+        transform: translateY(0px); 
+    }
+    25% { 
+        transform: translateY(15px); 
+    }
+    50% { 
+        transform: translateY(-15px); 
+    }
+    75% { 
+        transform: translateY(15px); 
+    }
+    100% { 
+        right: 115%; /* Moves completely off the left side */
+        transform: translateY(0px); 
+    }
+}
+
+/* Pulse effect to make it more noticeable */
+#daily-bonus-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 223, 0, 0.9);
+    transition: 0.3s;
+}
