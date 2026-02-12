@@ -149,7 +149,7 @@ function injectAdUnit(container, code) {
 
 function handleSplashTimer(overlay) {
     const timerText = document.getElementById('timer-seconds');
-    let timeLeft = 5;
+    let timeLeft = 2;
 
     const countdown = setInterval(() => {
         timeLeft--;
