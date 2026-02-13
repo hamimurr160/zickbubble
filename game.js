@@ -334,3 +334,4 @@ document.getElementById('resumeBtn').onclick = () => {
 };
 
 init(); update();
+    
