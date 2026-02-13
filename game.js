@@ -1,8 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-// --- CONNECT AD ENGINE ---
-import { runUniversalEngine } from "./adEngine.js";
+
+// --- CONNECT AD ENGINE (With Safety Check) ---
+let adEngine = null;
+try {
+    // Attempting to import the engine
+    const module = await import("./adEngine.js").catch(e => console.error("adEngine.js not found"));
+    if (module) {
+        adEngine = module.runUniversalEngine;
+    }
+} catch (e) {
+    console.warn("Ad Engine failed to load, but game will continue.");
+}
 
 const firebaseConfig = {
     apiKey: "AIzaSyC2n_sZjqOOr73o201vvJ0PaNDUFmwoesM",
@@ -20,13 +30,14 @@ let currentUser = null;
 
 onAuthStateChanged(auth, (user) => { if (user) currentUser = user; });
 
-// Start Ad Engine for Game Page
-runUniversalEngine(db, "gamepage");
+// Start Ad Engine only if it loaded successfully
+if (adEngine) {
+    adEngine(db, "gamepage");
+}
 
 // --- AD COUNTERS ---
 let gameOverCount = 0;
 
-// --- AD BANNER HELPER ---
 function togglePauseAds(show) {
     const ads = document.querySelectorAll('.fixed-ad-container');
     ads.forEach(ad => {
@@ -34,11 +45,10 @@ function togglePauseAds(show) {
     });
 }
 
-// --- ENHANCED HOURLY/30-MIN REWARD BUBBLE ---
 window.triggerDailyBonus = async function() {
     const now = Date.now();
     const lastClaim = localStorage.getItem('lastBubbleClaim');
-    const cooldown = 30 * 60 * 1000; // 30 Minutes
+    const cooldown = 30 * 60 * 1000;
 
     if (lastClaim && (now - lastClaim < cooldown)) {
         const remaining = Math.ceil((cooldown - (now - lastClaim)) / 60000);
@@ -47,42 +57,37 @@ window.triggerDailyBonus = async function() {
     }
 
     if(confirm("💎 Bonus Bubble! Watch a video to claim 2,500 - 3,000 coins?")) {
-        // --- TRIGGER REWARDED AD FROM ENGINE ---
-        // Assuming your HTML has a container with id 'rewarded-ad-container'
-        window.triggerRewarded('rewarded-ad-container', async () => {
-            const bonusReward = Math.floor(Math.random() * (3000 - 2500 + 1)) + 2500;
-            
-            if (currentUser) {
-                try {
-                    const userRef = doc(db, "users", currentUser.uid);
-                    await updateDoc(userRef, { balance: increment(bonusReward) });
-                    localStorage.setItem('lastBubbleClaim', Date.now());
-                    const bubble = document.getElementById('daily-bonus-bubble');
-                    if(bubble) bubble.style.display = 'none';
-                    alert(`💰 Awesome! You earned ${bonusReward.toLocaleString()} coins!`);
-                } catch (err) { 
-                    console.error("Firebase Error:", err);
-                    alert("Database error. Check your connection.");
+        if (window.triggerRewarded) {
+            window.triggerRewarded('rewarded-ad-container', async () => {
+                const bonusReward = Math.floor(Math.random() * (3000 - 2500 + 1)) + 2500;
+                if (currentUser) {
+                    try {
+                        const userRef = doc(db, "users", currentUser.uid);
+                        await updateDoc(userRef, { balance: increment(bonusReward) });
+                        localStorage.setItem('lastBubbleClaim', Date.now());
+                        const bubble = document.getElementById('daily-bonus-bubble');
+                        if(bubble) bubble.style.display = 'none';
+                        alert(`💰 Awesome! You earned ${bonusReward.toLocaleString()} coins!`);
+                    } catch (err) { console.error(err); }
                 }
-            }
-        });
+            });
+        } else {
+            alert("Ads currently unavailable. Try again later.");
+        }
     }
 };
 
-// --- CLOUD SYNC LOGIC ---
 async function syncScoreToFirebase() {
     if (currentUser && score > 0) {
         const currentSessionScore = score;
-        score = 0; // Prevent double syncing
+        score = 0;
         try {
             const userRef = doc(db, "users", currentUser.uid);
             await updateDoc(userRef, { balance: increment(currentSessionScore) });
-            console.log("Coins Synced!");
         } catch (err) { console.error("Sync Error:", err); }
     }
 }
 
-// Function to handle the Random Reward (1000 - 3000)
 async function giveRandomSurpriseReward() {
     if (currentUser) {
         const randomReward = Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000;
@@ -90,7 +95,7 @@ async function giveRandomSurpriseReward() {
             const userRef = doc(db, "users", currentUser.uid);
             await updateDoc(userRef, { balance: increment(randomReward) });
             alert(`🎁 Amazing! You earned ${randomReward.toLocaleString()} bonus coins!`);
-        } catch (err) { console.error("Reward Error:", err); }
+        } catch (err) { console.error(err); }
     }
 }
 
@@ -131,8 +136,7 @@ function init() {
     shooter.color = randomColor(); shooter.next = randomColor();
 
     const lastClaim = localStorage.getItem('lastBubbleClaim');
-    const cooldown = 30 * 60 * 1000;
-    if (lastClaim && (Date.now() - lastClaim < cooldown)) {
+    if (lastClaim && (Date.now() - lastClaim < (30 * 60 * 1000))) {
         const bubble = document.getElementById('daily-bonus-bubble');
         if(bubble) bubble.style.display = 'none';
     }
@@ -286,20 +290,19 @@ function endGame() {
     gameOverCount++;
     document.getElementById('finalScore').innerText = score;
     document.getElementById('gameOverMenu').style.display = 'flex';
-    togglePauseAds(true); // Show banners on Game Over
+    togglePauseAds(true);
     syncScoreToFirebase();
 
-    // Trigger Interstitial from Ad Engine every 3 Game Overs
-    if (gameOverCount % 3 === 0) {
+    if (gameOverCount % 3 === 0 && window.triggerInterstitial) {
         window.triggerInterstitial('interstitial-ad-container');
     }
 
     if (gameOverCount % 5 === 0) {
         setTimeout(() => {
             if(confirm("🎁 Special Surprise Gift! Watch a video to earn 1,000 - 3,000 bonus coins?")) {
-                window.triggerRewarded('rewarded-ad-container', () => {
-                    giveRandomSurpriseReward();
-                });
+                if(window.triggerRewarded) {
+                    window.triggerRewarded('rewarded-ad-container', () => giveRandomSurpriseReward());
+                }
             }
         }, 1000);
     }
@@ -325,13 +328,14 @@ canvas.addEventListener('pointerup', (e) => {
 document.getElementById('pauseBtn').onclick = () => { 
     isPaused = true; 
     document.getElementById('pauseMenu').style.display = 'flex'; 
-    togglePauseAds(true); // SHOW BANNERS
+    togglePauseAds(true);
 };
 document.getElementById('resumeBtn').onclick = () => { 
     isPaused = false; 
     document.getElementById('pauseMenu').style.display = 'none'; 
-    togglePauseAds(false); // HIDE BANNERS
+    togglePauseAds(false);
 };
 
-init(); update();
-    
+init(); 
+update();
+                                             
